@@ -13,10 +13,6 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Frequency sample;
-            sample = Frequency.Weekly;
-            Console.WriteLine(sample);
-            Console.ReadLine();
         }
     }
 }

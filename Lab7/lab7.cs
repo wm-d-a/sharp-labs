@@ -109,24 +109,34 @@ namespace Lab7
             }
         }
         public bool this[Frequency index] {
-            get { 
-                if (magazineOut == Frequency) 
+            get {
+                if (magazineOut == index)
+                {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         }
-        // Метод
-        public void AddArticles(Article article) {
-            this.articles.Append(article);
+        // Методы
+        public void AddArticles(Article[] new_articles) {
+            int before = this.articles.Length;
+            Array.Resize(ref this.articles, new_articles.Length);
+            for (int i = before; i < this.articles.Length; i++) {
+                this.articles[i] = new_articles[i - new_articles.Length];
+            }
         }
         public override string ToString() {
             string info = "";
             info += "Magazine Name: " + this.magazineName + '\n';
             info += "Output frequency: " + this.magazineOut + '\n';
-            info += "Release date" + this.dateOut.Year + " " + this.dateOut.Month + " " + this.dateOut.Day + " " + '\n';
+            info += "Release date: " + this.dateOut.Year + " " + this.dateOut.Month + " " + this.dateOut.Day + " " + '\n';
             info += "Circulation: " + this.circulation + '\n';
             info += "\nArticles\n";
             for (int i = 0; i < this.articles.Length; i++) {
                 info += "Article " + i + '\n';
-                info += this.articles[i].ToString();
+                info += this.articles[i].ToString() + '\n';
             }
             return info;
         }
@@ -136,7 +146,7 @@ namespace Lab7
             info += "Output frequency: " + this.magazineOut + '\n';
             info += "Release date: " + this.dateOut.Year + " " + this.dateOut.Month + " " + this.dateOut.Day + " " + '\n';
             info += "Circulation: " + this.circulation + '\n';
-            info += "Avg rating" + Avg;
+            info += "Avg rating: " + Avg;
             return info;
         }
     }
@@ -152,7 +162,36 @@ namespace Lab7
                 new Article(new Person(), "Thirthy Article", 4.9),
             };
             sample.Articles = articles;
+            //1
+            Console.WriteLine("NUMBER 2\n");
             Console.WriteLine(sample.ToShortString());
+            //-----------
+            //2
+            Console.WriteLine("\nNUMBER 2\n");
+            Console.WriteLine(sample[Frequency.Weekly]);
+            Console.WriteLine(sample[Frequency.Monthly]);
+            Console.WriteLine(sample[Frequency.Yearly]);
+            //---------
+            //3
+            Console.WriteLine("\nNUMBER 3\n");
+            sample.MagazineName = "TPMag";
+            sample.MagazineOut = Frequency.Monthly;
+            sample.DateOut = new DateTime(2021, 11, 7);
+            sample.Circulation = 1000;
+            Console.WriteLine(sample.ToString());
+            //-----------
+            //4  DON'T WORK!!!
+            Console.WriteLine("\nNUMBER 4\n");
+            Article[] new_articles = {
+                new Article(new Person(), "Fourth Article", 4.6),
+                new Article(new Person(), "Fifth Article", 4.1),
+                new Article(new Person(), "Sixth Article", 4.9),
+            };
+            sample.AddArticles(new_articles);
+            Console.WriteLine(sample.ToString());
+            //----------------
+            //5
+            Console.WriteLine("\nNUMBER 5");
             Console.ReadLine();
         }
     }
@@ -183,26 +222,26 @@ namespace Lab7
             get { return this.surname; }
             set { this.surname = value; }
         }
-            public System.DateTime GetDate
-            {
-                get { return this.date; }
-                set { this.date = value; }
-            }
-            public int Nothing
-            {
-                get { return this.date.Year; }
-                set { this.date = new DateTime(value, date.Month, date.Day); }
-            }
+        public System.DateTime GetDate
+        {
+            get { return this.date; }
+            set { this.date = value; }
+        }
+        public int Nothing
+        {
+            get { return this.date.Year; }
+            set { this.date = new DateTime(value, date.Month, date.Day); }
+        }
 
-            public override string ToString()
-            {
-                string buf = string.Format("Person {0}, {1}, {2}", name, surname, date);
-                return buf;
-            }
-            public virtual string ToShortString()
-            {
-                string buf = string.Format("Person {0}, {1}", name, surname);
-                return buf;
-            }
+        public override string ToString()
+        {
+            string buf = string.Format("Person {0}, {1}, {2}", name, surname, date);
+            return buf;
+        }
+        public virtual string ToShortString()
+        {
+            string buf = string.Format("Person {0}, {1}", name, surname);
+            return buf;
+        }
     }
 }
