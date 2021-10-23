@@ -1,0 +1,7 @@
+C:\C_SHARP\labs_\laba2\bin\Release\laba2.exe.config
+C:\C_SHARP\labs_\laba2\bin\Release\laba2.exe
+C:\C_SHARP\labs_\laba2\bin\Release\laba2.pdb
+C:\C_SHARP\labs_\laba2\obj\Release\laba2.csproj.AssemblyReference.cache
+C:\C_SHARP\labs_\laba2\obj\Release\laba2.csproj.CoreCompileInputs.cache
+C:\C_SHARP\labs_\laba2\obj\Release\laba2.exe
+C:\C_SHARP\labs_\laba2\obj\Release\laba2.pdb

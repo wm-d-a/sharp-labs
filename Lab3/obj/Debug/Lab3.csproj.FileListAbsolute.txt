@@ -1,0 +1,7 @@
+C:\C_SHARP\labs_\Lab3\bin\Debug\Lab3.exe.config
+C:\C_SHARP\labs_\Lab3\bin\Debug\Lab3.exe
+C:\C_SHARP\labs_\Lab3\bin\Debug\Lab3.pdb
+C:\C_SHARP\labs_\Lab3\obj\Debug\Lab3.csproj.AssemblyReference.cache
+C:\C_SHARP\labs_\Lab3\obj\Debug\Lab3.csproj.CoreCompileInputs.cache
+C:\C_SHARP\labs_\Lab3\obj\Debug\Lab3.exe
+C:\C_SHARP\labs_\Lab3\obj\Debug\Lab3.pdb
