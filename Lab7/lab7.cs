@@ -120,7 +120,7 @@ namespace Lab7
             }
         }
         // Методы
-        public void AddArticles(Article[] new_articles) {
+        public void AddArticles(Article[] new_articles) { // ???????????????????
             int before = this.articles.Length;
             Array.Resize(ref this.articles, new_articles.Length);
             for (int i = before; i < this.articles.Length; i++) {

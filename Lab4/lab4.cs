@@ -45,7 +45,7 @@ namespace Lab4
             output(s1);
             //------------------------
             //4
-            Console.WriteLine($"Длинна первого списка: {s1.Count}\n");
+            Console.WriteLine($"Длина первого списка: {s1.Count}\n");
             //------------------------
             //5
             s1.Sort();
