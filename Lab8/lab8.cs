@@ -139,14 +139,6 @@ namespace Lab8
         }
         // Методы
 
-        // Свойства
-        /*
-        public int GetCount {
-
-            get { return this.Count; }
-        }
-        */
-
         // Индексатор
         public int this[int index]
         {
@@ -225,6 +217,7 @@ namespace Lab8
                 Console.WriteLine();
             }
             //---
+            // /
             {
                 Console.WriteLine("Operetor '/'");
                 Console.Write("Set 1: ");
@@ -239,6 +232,8 @@ namespace Lab8
                 sample6.ShowSet();
                 Console.WriteLine();
             }
+            //---
+            // >
             {
                 Console.WriteLine("Operetor '>'");
                 Console.Write("Set 1: ");
@@ -248,6 +243,7 @@ namespace Lab8
                 Console.Write("Result: ");
                 Console.WriteLine(sample1 > sample2);
             }
+            //---
             Console.ReadLine();
         }
     }
