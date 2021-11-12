@@ -1,6 +1,6 @@
 ﻿using System;
-using Exercise;
 using static System.Console;
+using System.Collections.Generic;
 
 namespace Lab7
 {
