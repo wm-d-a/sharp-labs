@@ -1,249 +1,208 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Exercise;
+using static System.Console;
 
 namespace Lab7
 {
-    enum Frequency
+    class Paper
     {
-        Weekly,
-        Monthly,
-        Yearly,
+        public string Title { get; set; }
+        public Person Author { get; set; }
+        public DateTime Publication { get; set; }
+        public Paper()
+        {
+            Title = "NoTitle";
+            Author = new Person();
+            Publication = new DateTime();
+        }
+        public Paper(string title, Person author, DateTime publication)
+        {
+            this.Title = title;
+            this.Author = author;
+            this.Publication = publication;
+        }
+        public override string ToString() => $"{Title} {Author} {Publication.ToShortDateString()}";
     }
-    class Article {
-        private Person human;
-        private string articleName;
-        private double rating;
+    class Person
+    {
+        string name;
+        string surname;
+        DateTime birth;
+        public Person()
+        {
+            name = "NoName";
+            surname = "NoSurname";
+            birth = new DateTime(2000, 1, 1);
+        }
+        public Person(string name, string surname, DateTime birth)
+        {
+            this.name = name;
+            this.surname = surname;
+            this.birth = birth;
+        }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public string Surname
+        {
+            get { return surname; }
+            set { surname = value; }
+        }
+        public DateTime Birth
+        {
+            get { return birth; }
+            set { birth = value; }
+        }
+        public int Year
+        {
+            get { return Birth.Year; }
+            set { Birth = new DateTime(value, Birth.Month, Birth.Day); }
+        }
+        public override string ToString() => $"{name} {surname} {birth.ToShortDateString()}";
+        public string ToShortString() => $"{name} {surname}";
+    }
 
-        //Конструкторы
-        public Article(Person human, string articleName, double rating) {
-            this.human = human;
-            this.articleName = articleName;
-            this.rating = rating;
+    enum TimeFrame { Year, TwoYear, Long }
+    class ResearchTeam
+    {
+        string theme, organization;
+        int id;
+        TimeFrame tf;
+        Paper[] papers;
+        public ResearchTeam()
+        {
+            theme = "NoTheme";
+            organization = "NoOrg";
+            id = 75343;
+            tf = TimeFrame.Year;
+            papers = new Paper[] {};
         }
-        public Article() {
-            this.human = new Person("Name", "Surname", new DateTime());
-            this.articleName = "Article Name";
-            this.rating = 0.0;
+        public ResearchTeam(string theme, string organization, int id, TimeFrame tf) : base()
+        {
+            this.theme = theme;
+            this.organization = organization;
+            this.id = id;
+            this.tf = tf;
         }
-        //------------------
+        public Paper Paper
+        {
+            get
+            {
+                if(papers.Length == 0) return null;
+                else return papers[papers.Length - 1];
+            }
+        }
+        public string Theme
+        {
+            get { return theme; }
+            set { theme = value; }
+        }
+        public string Organization
+        {
+            get { return organization; }
+            set { organization = value; }
+        }
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        public TimeFrame TF
+        {
+            get { return tf; }
+            set { tf = value; }
+        }
+        public Paper[] Papers
+        {
+            get { return papers; }
+            set { papers = value; }
+        }
+        public bool this[TimeFrame tf] { get => this.tf == tf; }
+        public void AddPapers(params Paper[] papers)
+        {
+            List<Paper> list = new List<Paper>(this.papers);
+            list.AddRange(papers);
+            this.papers = list.ToArray();
+        }
         public override string ToString()
         {
-            string buf = string.Format("Author: {0}; Article name: {1}; Rating: {2};", this.human.ToString(), this.articleName, this.rating);
-            return buf;
+            string temp = $"{theme} {organization} {id} {tf}\n";
+            foreach (var item in papers) temp += item + "\n";
+            return temp;
         }
-        //Свойства 
-        public Person Human {
-            get { return this.human; }
-            set { this.human = value; }
-        }
-        public string ArticleName {
-            get { return this.articleName; }
-            set { this.articleName = value; }
-        } 
-        public double Rating {
-            get { return this.rating; }
-            set { this.rating = value; }
-        }
+        public string ToShortString() => $"{theme} {organization} {id} {tf}";
+    }
 
-    }
-    class Magazine
-    {
-        private string magazineName;
-        private Frequency magazineOut;  // периодичность выхода
-        private System.DateTime dateOut;
-        private int circulation; // тираж
-        private Article[] articles;
-        //Конструкторы
-        public Magazine(string magazineName, Frequency magazineOut, System.DateTime dateOut, int circulation)
-        {
-            this.magazineName = magazineName;
-            this.magazineOut = magazineOut;
-            this.dateOut = dateOut;
-            this.circulation = circulation;
-        }
-        public Magazine()
-        {
-            this.magazineName = "MagazineName";
-            this.magazineOut = Frequency.Monthly;
-            this.dateOut = new DateTime();
-            this.circulation = 0;
-        }
-        // Свойства
-        public string MagazineName
-        {
-            get { return this.magazineName; }
-            set { this.magazineName = value; }
-        }
-        public Frequency MagazineOut
-        {
-            get { return this.magazineOut; }
-            set { this.magazineOut = value; }
-        }
-        public DateTime DateOut
-        {
-            get { return this.dateOut; }
-            set { this.dateOut = value; }
-        }
-        public int Circulation
-        {
-            get { return this.circulation; }
-            set { this.circulation = value; }
-        }
-        public Article[] Articles {
-            get {
-                return this.articles;
-            }
-            set { this.articles = value; }
-        }
-        public double Avg {
-            get {
-                double sum = 0;
-                for (int i = 0; i < this.articles.Length; i++) {
-                    sum += articles[i].Rating;
-                }
-                double avg = sum / articles.Length;
-                return avg;
-            }
-        }
-        public bool this[Frequency index] {
-            get {
-                if (magazineOut == index)
-                {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
-        }
-        // Методы
-        public void AddArticles(Article[] new_articles) { // ???????????????????
-            int before = this.articles.Length;
-            
-            Array.Resize(ref this.articles, new_articles.Length);
-            Console.WriteLine($"{this.articles.Length}");
-            for (int i = before; i < this.articles.Length; i++) {
-                this.articles[i] = new_articles[i - new_articles.Length];
-            }
-        }
-        public override string ToString() {
-            string info = "";
-            info += "Magazine Name: " + this.magazineName + '\n';
-            info += "Output frequency: " + this.magazineOut + '\n';
-            info += "Release date: " + this.dateOut.Year + " " + this.dateOut.Month + " " + this.dateOut.Day + " " + '\n';
-            info += "Circulation: " + this.circulation + '\n';
-            info += "\nArticles\n";
-            for (int i = 0; i < this.articles.Length; i++) {
-                info += "Article " + i + '\n';
-                info += this.articles[i].ToString() + '\n';
-            }
-            return info;
-        }
-        public virtual string ToShortString() {
-            string info = "";
-            info += "Magazine Name: " + this.magazineName + '\n';
-            info += "Output frequency: " + this.magazineOut + '\n';
-            info += "Release date: " + this.dateOut.Year + " " + this.dateOut.Month + " " + this.dateOut.Day + " " + '\n';
-            info += "Circulation: " + this.circulation + '\n';
-            info += "Avg rating: " + Avg;
-            return info;
-        }
-    }
+
     class lab7
     {
         static void Main(string[] args)
         {
-            Magazine sample = new Magazine("Top Posters", Frequency.Weekly, new DateTime(2021, 10, 22), 500);
-            //sample.Articles = new Article[5];
-            Article[] articles = { 
-                new Article(new Person(), "First Article", 4.6),
-                new Article(new Person(), "Second Article", 4.1),
-                new Article(new Person(), "Thirthy Article", 4.9),
+            ResearchTeam RT = new ResearchTeam();    
+            WriteLine($"1. До присвоения значения свойствам (короткая):\n{RT.ToShortString()}\n");
+            WriteLine("2. Проверка индексатора:");
+            WriteLine($"Year: {RT[TimeFrame.Year]}");
+            WriteLine($"TwoYear: {RT[TimeFrame.TwoYear]}");
+            WriteLine($"Long: {RT[TimeFrame.Long]}");
+            WriteLine();
+            RT.Id = 13343;
+            RT.Organization = "Leeodl Dosl";
+            RT.Theme = "Ice ice ice";
+            RT.TF = TimeFrame.Long;
+            RT.Papers = new Paper[]
+            {
+                new Paper("Gg", new Person(), new DateTime(2001, 2, 3)),
+                new Paper()
             };
-            sample.Articles = articles;
-            //1
-            Console.WriteLine("NUMBER 2\n");
-            Console.WriteLine(sample.ToShortString());
-            //-----------
-            //2
-            Console.WriteLine("\nNUMBER 2\n");
-            Console.WriteLine(sample[Frequency.Weekly]);
-            Console.WriteLine(sample[Frequency.Monthly]);
-            Console.WriteLine(sample[Frequency.Yearly]);
-            //---------
-            //3
-            Console.WriteLine("\nNUMBER 3\n");
-            sample.MagazineName = "TPMag";
-            sample.MagazineOut = Frequency.Monthly;
-            sample.DateOut = new DateTime(2021, 11, 7);
-            sample.Circulation = 1000;
-            Console.WriteLine(sample.ToString());
-            //-----------
-            //4  DON'T WORK!!!
-            Console.WriteLine("\nNUMBER 4\n");
-            Article[] new_articles = {
-                new Article(new Person(), "Fourth Article", 4.6),
-                new Article(new Person(), "Fifth Article", 4.1),
-                new Article(new Person(), "Sixth Article", 4.9),
-            };
-            sample.AddArticles(new_articles);
-            Console.WriteLine(sample.ToString());
-            //----------------
-            //5
-            Console.WriteLine("\nNUMBER 5");
-            Console.ReadLine();
-        }
-    }
-    class Person
-    {
-        private string name;
-        private string surname;
-        private DateTime date;
-        public Person(string name, string surname, DateTime date)
-        {
-            this.name = name;
-            this.surname = surname;
-            this.date = date;
-        }
-        public Person()
-        {
-            this.name = "SomeName";
-            this.surname = "SomeSurname";
-            this.date = new DateTime();
-        }
-        public string GetName
-        { 
-            get { return this.name; }
-            set { this.name = value; }
-        }
-        public string GetSurname
-        {
-            get { return this.surname; }
-            set { this.surname = value; }
-        }
-        public System.DateTime GetDate
-        {
-            get { return this.date; }
-            set { this.date = value; }
-        }
-        public int Nothing
-        {
-            get { return this.date.Year; }
-            set { this.date = new DateTime(value, date.Month, date.Day); }
-        }
+            WriteLine($"3. После присвоения значения свойствам:\n{RT.ToString()}");
+            RT.AddPapers(new Paper("Afecs", new Person(), new DateTime(2013, 2, 4)), new Paper());
+            WriteLine($"4. После добавления новый статей:\n{RT.ToString()}");
+            WriteLine($"5. Последняя статья:\n{RT.Paper}");
+            WriteLine();
 
-        public override string ToString()
-        {
-            string buf = string.Format("Person {0}, {1}, {2}", name, surname, date);
-            return buf;
-        }
-        public virtual string ToShortString()
-        {
-            string buf = string.Format("Person {0}, {1}", name, surname);
-            return buf;
+            int nr, nc;
+            char[] separators = ",. ".ToCharArray();
+            try
+            {
+                Write("6. В качестве разделителей можно использовать: ");
+                foreach (var i in separators) Write(i);
+                WriteLine("\nВведите число строк и число столбцов");
+                string[] temp = ReadLine().Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                nr = Convert.ToInt32(temp[0]);
+                nc = Convert.ToInt32(temp[1]);
+                WriteLine($"Строк: {nr}\nСтолбцов: {nc}");
+            }
+            catch (System.Exception)
+            {
+                WriteLine("Введены неверные данные, попробуйте ещё раз.");
+                return;
+            }
+
+            Paper[] p1 = new Paper[nr * nc];
+            Paper[,] p2 = new Paper[nr, nc];
+            Paper[][] p3 = new Paper[nr][];
+            for (int i = 0; i < p3.Length; i++) p3[i] = new Paper[nc];
+
+            WriteLine("Затраченное время:");
+            int start, end;
+            start = Environment.TickCount;
+            for(int i = 0; i < nr * nc; i++) p1[i] = new Paper();
+            end = Environment.TickCount;
+            WriteLine($"Одномерный массив = {end - start}");
+
+            start = Environment.TickCount;
+            for(int i = 0; i < nr; i++)
+                for(int j = 0; j < nc; j++) p2[i, j] = new Paper();
+            end = Environment.TickCount;
+            WriteLine($"Двумерный массив = {end - start}");
+            
+            start = Environment.TickCount;
+            for(int i = 0; i < nr; i++)
+                for(int j = 0; j < nc; j++) p3[i][j] = new Paper();
+            end = Environment.TickCount;
+            WriteLine($"Зубчатый массив = {end - start}");
         }
     }
 }

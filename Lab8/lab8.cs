@@ -155,8 +155,8 @@ namespace Lab8
     {
         static void Main(string[] args)
         {
-            int[] s1 = { 1, 2 };
-            int[] s2 = { 3, 4, 5 };
+            int[] s1 = { 2, 2 ,2};
+            int[] s2 = { 2, 2, 3 };
 
             Set sample1 = new Set(s1);
             Set sample2 = new Set(s2);
@@ -169,7 +169,7 @@ namespace Lab8
             // Add()
             {
                 Console.WriteLine("Demonstration of method Add()");
-                sample1.Add(3);
+                //sample1.Add(3);
                 sample1.ShowSet();
                 Console.WriteLine();
             }
@@ -208,6 +208,7 @@ namespace Lab8
             {
                 Console.WriteLine("Operetor '*'");
                 Console.Write("Set 1: ");
+                
                 sample1.ShowSet();
                 Console.Write("Set 2: ");
                 sample2.ShowSet();
