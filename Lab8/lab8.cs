@@ -69,14 +69,17 @@ namespace Lab8
         }
         public static Set operator +(Set sample1, Set sample2)  // DONE!
         {
-            int[] buf = { };
-            Set buf_set = new Set(buf);
-            for (int i = 0; i < sample2.Count; i++) {
-                buf_set.Add(sample1[i]);
+            int[] buf = new int[sample1.Count + sample2.Count];
+            int c = 0;
+            for (int i = 0; i < sample1.Count; i++) {
+                buf[c] = sample1[i];
+                c++;
             }
             for (int i = 0; i < sample2.Count; i++) {
-                buf_set.Add(sample2[i]);
+                buf[c] = sample2[i];
+                c++;
             }
+            Set buf_set = new Set(buf.Distinct().ToArray());
             return buf_set;
         }
         public static Set operator *(Set sample1, Set sample2)  // DONE!
@@ -155,8 +158,8 @@ namespace Lab8
     {
         static void Main(string[] args)
         {
-            int[] s1 = { 2, 2 ,2};
-            int[] s2 = { 2, 2, 3 };
+            int[] s1 = { 1, 2};
+            int[] s2 = { 3, 4, 5 };
 
             Set sample1 = new Set(s1);
             Set sample2 = new Set(s2);
@@ -169,7 +172,7 @@ namespace Lab8
             // Add()
             {
                 Console.WriteLine("Demonstration of method Add()");
-                //sample1.Add(3);
+                sample1.Add(3);
                 sample1.ShowSet();
                 Console.WriteLine();
             }
