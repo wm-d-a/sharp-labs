@@ -36,10 +36,18 @@ namespace Lab9
         }
         public static bool operator ==(Paper sample1, Paper sample2)
         {
-            if (sample1.Equals(sample2)) {
+            if ((sample1.Title.GetHashCode() == sample2.Title.GetHashCode()) & (sample1.Publication.GetHashCode() == sample2.Publication.GetHashCode()) & (sample1.Author.GetHashCode() == sample2.Author.GetHashCode()))
+            {
                 return true;
             }
-            return false;
+            else
+            {
+                if (sample1.Equals(sample2))
+                {
+                    return true;
+                }
+                return false;
+            }
 
             /*
             if ((sample1.Title == sample2.Title) & (sample1.Author == sample2.Author) & (sample1.Publication == sample2.Publication))
@@ -117,12 +125,18 @@ namespace Lab9
         }
         public static bool operator ==(Person sample1, Person sample2)
         {
-            
-            if (sample1.Equals(sample2)){
+            if ((sample1.name.GetHashCode() == sample2.name.GetHashCode()) & (sample1.surname.GetHashCode() == sample2.surname.GetHashCode()) & (sample1.birth.GetHashCode() == sample2.birth.GetHashCode()))
+            {
                 return true;
             }
-            return false;
-            
+            else
+            {
+                if (sample1.Equals(sample2))
+                {
+                    return true;
+                }
+                return false;
+            }
             /*if ((sample1.name == sample2.name) & (sample1.surname == sample2.surname) & (sample1.birth == sample2.birth))
             {
                 return true;
@@ -131,15 +145,16 @@ namespace Lab9
         }
         public static bool operator !=(Person sample1, Person sample2)
         {
-            if ((sample1.name.GetHashCode() != sample2.name.GetHashCode()) & (sample1.surname != sample2.surname.GetHashCode) & (sample1.birth != sample2.birth))
+            if ((sample1.name.GetHashCode() != sample2.name.GetHashCode()) & (sample1.surname.GetHashCode() != sample2.surname.GetHashCode()) & (sample1.birth.GetHashCode() != sample2.birth.GetHashCode()))
             {
                 return true;
             }
-            else return false;
-
-            if (sample1.Equals(sample2))
+            else
             {
-                return false;
+                if (sample1.Equals(sample2))
+                {
+                    return false;
+                }
             }
             return true;
 
@@ -150,7 +165,6 @@ namespace Lab9
             else return false;*/
         }
         public override int GetHashCode() {
-            //?????????????????????????????????????????????????????????????????????
             return this.GetHashCode();
         }
     }
@@ -236,11 +250,18 @@ namespace Lab9
         }
 
         public static bool operator ==(ResearchTeam sample1, ResearchTeam sample2) {
-            if (sample1.Equals(sample2))
+            if ((sample1.theme.GetHashCode() == sample2.theme.GetHashCode()) & (sample1.organization.GetHashCode() == sample2.organization.GetHashCode()) & (sample1.id.GetHashCode() == sample2.id.GetHashCode()))
             {
                 return true;
             }
-            return false;
+            else
+            {
+                if (sample1.Equals(sample2))
+                {
+                    return true;
+                }
+                return false;
+            }
             /*
             if ((sample1.theme == sample2.theme) & (sample1.organization == sample2.organization) & (sample1.id == sample2.id) & (sample1.tf == sample2.tf))
             {
@@ -262,6 +283,10 @@ namespace Lab9
                 return true;
             }
             return false;*/
+        }
+        public override int GetHashCode()
+        {
+            return this.GetHashCode();
         }
     }
     class lab9
