@@ -90,8 +90,17 @@ namespace Lab7
         {
             get
             {
+                DateTime max = new DateTime();
+                Paper buf = new Paper();
                 if(papers.Length == 0) return null;
-                else return papers[papers.Length - 1];
+                for (int i = 0; i < papers.Length; i++)
+                {
+                    if (papers[i].Publication > max) {
+                        max = papers[i].Publication;
+                        buf = papers[i];
+                    }
+                }   
+                return buf;
             }
         }
         public string Theme

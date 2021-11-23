@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab9
 {
+    // old
     class Paper
     {
         public string Title { get; set; }
@@ -59,7 +60,7 @@ namespace Lab9
         }
         public static bool operator !=(Paper sample1, Paper sample2)
         {
-            if (sample1.Equals(sample2))
+            if ((sample1.Title.GetHashCode() == sample2.Title.GetHashCode()) & (sample1.Author.GetHashCode() == sample2.Author.GetHashCode()) & (sample1.Publication.GetHashCode() == sample2.Publication.GetHashCode()))
             {
                 return false;
             }
@@ -145,16 +146,9 @@ namespace Lab9
         }
         public static bool operator !=(Person sample1, Person sample2)
         {
-            if ((sample1.name.GetHashCode() != sample2.name.GetHashCode()) & (sample1.surname.GetHashCode() != sample2.surname.GetHashCode()) & (sample1.birth.GetHashCode() != sample2.birth.GetHashCode()))
+            if ((sample1.name.GetHashCode() == sample2.name.GetHashCode()) & (sample1.surname.GetHashCode() == sample2.surname.GetHashCode()) & (sample1.birth.GetHashCode() == sample2.birth.GetHashCode()))
             {
-                return true;
-            }
-            else
-            {
-                if (sample1.Equals(sample2))
-                {
-                    return false;
-                }
+                return false;
             }
             return true;
 
@@ -170,25 +164,25 @@ namespace Lab9
     }
 
     enum TimeFrame { Year, TwoYear, Long }
-    class ResearchTeam
+    class ResearchTeam : Team
     {
-        string theme, organization;
-        int id;
-        TimeFrame tf;
-        Paper[] papers;
+        private string theme;
+        private TimeFrame tf;
+        private Paper[] papers;
+        private Person[] persons;
         public ResearchTeam()
         {
             theme = "NoTheme";
-            organization = "NoOrg";
-            id = 75343;
+            orgName = "NoOrg";
+            regNumber = 75343;
             tf = TimeFrame.Year;
             papers = new Paper[] { };
         }
         public ResearchTeam(string theme, string organization, int id, TimeFrame tf) : base()
         {
             this.theme = theme;
-            this.organization = organization;
-            this.id = id;
+            this.orgName = organization;
+            this.regNumber = id;
             this.tf = tf;
         }
         public Paper Paper
@@ -206,13 +200,13 @@ namespace Lab9
         }
         public string Organization
         {
-            get { return organization; }
-            set { organization = value; }
+            get { return orgName; }
+            set { orgName = value; }
         }
         public int Id
         {
-            get { return id; }
-            set { id = value; }
+            get { return regNumber; }
+            set { regNumber = value; }
         }
         public TimeFrame TF
         {
@@ -233,24 +227,24 @@ namespace Lab9
         }
         public override string ToString()
         {
-            string temp = $"{theme} {organization} {id} {tf}\n";
+            string temp = $"{theme} {orgName} {regNumber} {tf}\n";
             foreach (var item in papers) temp += item + "\n";
             return temp;
         }
-        public string ToShortString() => $"{theme} {organization} {id} {tf}";
+        public string ToShortString() => $"{theme} {orgName} {regNumber} {tf}";
 
         // lab 9
         public override bool Equals(object obj)
         {
             ResearchTeam other = obj as ResearchTeam;
-            if ((other.theme == this.theme) & (other.organization == this.organization) & (other.id == this.id) & (other.tf == this.tf)) {
+            if ((other.theme == this.theme) & (other.orgName == this.orgName) & (other.regNumber == this.regNumber) & (other.tf == this.tf)) {
                 return true;
             }
             return false;
         }
 
         public static bool operator ==(ResearchTeam sample1, ResearchTeam sample2) {
-            if ((sample1.theme.GetHashCode() == sample2.theme.GetHashCode()) & (sample1.organization.GetHashCode() == sample2.organization.GetHashCode()) & (sample1.id.GetHashCode() == sample2.id.GetHashCode()))
+            if ((sample1.theme.GetHashCode() == sample2.theme.GetHashCode()) & (sample1.orgName.GetHashCode() == sample2.orgName.GetHashCode()) & (sample1.regNumber.GetHashCode() == sample2.regNumber.GetHashCode()))
             {
                 return true;
             }
@@ -272,7 +266,7 @@ namespace Lab9
         }
         public static bool operator !=(ResearchTeam sample1, ResearchTeam sample2)
         {
-            if (sample1.Equals(sample2))
+            if ((sample1.theme.GetHashCode() == sample2.theme.GetHashCode()) & (sample1.orgName.GetHashCode() == sample2.orgName.GetHashCode()) & (sample1.tf.GetHashCode() == sample2.tf.GetHashCode()))
             {
                 return false;
             }
@@ -289,10 +283,81 @@ namespace Lab9
             return this.GetHashCode();
         }
     }
+    /*interface IRateAndCopy
+    {
+        double Rating { get; }
+        object DeepCopy();
+    }*/
+
+    // new
+    class Team {
+        protected string orgName;
+        protected int regNumber;
+        public Team(string orgName, int regNumber) {
+            this.orgName = orgName;
+            this.regNumber = regNumber;
+        }
+        public Team() {
+            this.orgName = "DefaultOrgName";            
+            this.regNumber = 0;            
+        }
+        // свойства
+        string OrgName {
+            get { return this.orgName; }
+            set { this.orgName = value; }
+        }
+        int RegNumber {
+            get { return this.regNumber;  }
+            set { 
+                // ДОБАВИТЬ ИСКЛЮЧЕНИЕ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (value > 0) {
+                    this.regNumber = value;
+                }
+            }
+        }
+        // переопределения
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            Team other = obj as Team;
+            if ((other.orgName == this.orgName) & (other.regNumber == this.regNumber)) {
+                return true;
+            }
+            return false;
+        }
+        public static bool operator ==(Team sample1, Team sample2) {
+            if ((sample1.orgName.GetHashCode() == sample2.OrgName.GetHashCode()) & (sample1.regNumber.GetHashCode() == sample2.regNumber.GetHashCode()))
+            {
+                return true;
+            }
+            else {
+                if (sample1.Equals(sample2)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool operator !=(Team sample1, Team sample2) {
+            if ((sample1.orgName.GetHashCode()== sample2.OrgName.GetHashCode()) & (sample1.regNumber.GetHashCode() == sample2.regNumber.GetHashCode()))
+            {
+                return false;
+            }
+            return true;
+        }
+        public override string ToString()
+        {
+            string result = "Organization name: " + this.orgName + "Registration number: " + Convert.ToString(this.regNumber); 
+            return result;
+        }
+    }
     class lab9
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
