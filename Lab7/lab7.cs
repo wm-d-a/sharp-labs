@@ -128,7 +128,7 @@ namespace Lab7
             get { return papers; }
             set { papers = value; }
         }
-        public bool this[TimeFrame tf] { get => this.tf == tf; }
+        public bool this[TimeFrame tf] { get => this.tf == tf; } 
         public void AddPapers(params Paper[] papers)
         {
             List<Paper> list = new List<Paper>(this.papers);
@@ -140,7 +140,7 @@ namespace Lab7
             string temp = $"{theme} {organization} {id} {tf}\n";
             foreach (var item in papers) temp += item + "\n";
             return temp;
-        }
+        } 
         public string ToShortString() => $"{theme} {organization} {id} {tf}";
     }
 
@@ -195,7 +195,7 @@ namespace Lab7
             for (int i = 0; i < p3.Length; i++) p3[i] = new Paper[nc];
 
             WriteLine("Затраченное время:");
-            int start, end;
+            double start, end;
             start = Environment.TickCount;
             for(int i = 0; i < nr * nc; i++) p1[i] = new Paper();
             end = Environment.TickCount;
