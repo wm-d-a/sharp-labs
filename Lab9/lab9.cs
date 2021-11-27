@@ -94,17 +94,49 @@ namespace Lab9
             // ДОПЫ
             {
                 Console.WriteLine("Number 8");
-                
+                ResearchTeam test = new ResearchTeam();
+                test.AddPerson(new Person("Dave", "Hudson", new DateTime(1992, 3, 18)));
+                Console.WriteLine(test);
+                Console.WriteLine("\nUsers with publications:\n");
+                foreach (Person i in test.GetPersons2())
+                {
+                    Console.WriteLine(i);
+                }
                 Console.WriteLine();
             }
             {
                 Console.WriteLine("Number 9");
-                
+                ResearchTeam test = new ResearchTeam();
+                test.AddPerson(new Person("Dave", "Hudson", new DateTime(1992, 3, 18)));
+                test.AddPerson(new Person("Olivia", "Hudson", new DateTime(1990, 6, 1)));
+                test.AddPaper(new Paper("Original Title1", test.Persons[0], new DateTime(2020, 2, 2)));
+                test.AddPaper(new Paper("Original Title2", test.Persons[0], new DateTime(2020, 2, 2)));
+                test.AddPaper(new Paper("Original Title3", test.Persons[2], new DateTime(2020, 2, 2)));
+                test.AddPaper(new Paper("Original Title4", test.Persons[2], new DateTime(2020, 2, 2)));
+                test.AddPaper(new Paper("Original Title5", test.Persons[2], new DateTime(2020, 2, 2)));
+                test.AddPaper(new Paper("Original Title6", test.Persons[1], new DateTime(2020, 2, 2)));
+                Console.WriteLine(test);
+                Console.WriteLine("\nUsers with 1+ publications:\n");
+                foreach (Person i in test.GetPersons3())
+                {
+                    Console.WriteLine(i);
+                }
                 Console.WriteLine();
             }
             {
                 Console.WriteLine("Number 10");
-                
+                ResearchTeam test = new ResearchTeam();
+                List<Paper> papers = new List<Paper>();
+                papers.Add(new Paper("Django", test.Persons[0], new DateTime(2020, 7, 21)));
+                papers.Add(new Paper("Python1", test.Persons[0], new DateTime(2020, 3, 6)));
+                papers.Add(new Paper("Python2", test.Persons[0], new DateTime(2021, 3, 6)));
+                papers.Add(new Paper("Python3", test.Persons[0], new DateTime(2021, 3, 6)));
+                papers.Add(new Paper("History", test.Persons[0], new DateTime(2015, 2, 12)));
+                test.AddPapers(papers);
+                foreach (Paper i in test.GetPapersYear())
+                {
+                    Console.WriteLine(i);
+                }
                 Console.WriteLine();
             }
             Console.ReadKey();

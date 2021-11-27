@@ -93,7 +93,7 @@ namespace Lab9
                 }
                 else {
                     bool flag = true;
-                    for (int j = 0; i < papers.Count; i++) {
+                    for (int j = 0; j < papers.Count; j++) {
                         if (persons[i] == papers[j].Author) {
                             flag = false;
                         }
@@ -101,6 +101,45 @@ namespace Lab9
                     if (flag) { }
                     else
                     {
+                        yield return persons[i];
+                    }
+                }
+            }
+        }
+        public IEnumerable<Person> GetPersons2() // number 8
+        {
+            for (int i = 0; i < persons.Count; i++) {
+                if (i == persons.Count)
+                {
+                    yield break;
+                }
+                else {
+                    for (int j = 0; j < papers.Count; j++) {
+                        if (persons[i] == papers[j].Author) {
+                            yield return persons[i];
+                        }
+                    }
+
+                }
+            }
+        }
+        public IEnumerable<Person> GetPersons3() // number 9
+        {
+            for (int i = 0; i < persons.Count; i++) {
+                if (i == persons.Count)
+                {
+                    yield break;
+                }
+                else {
+                    //bool flag = false;
+                    int c = 0;
+                    for (int j = 0; j < papers.Count; j++) {
+                        if (persons[i] == papers[j].Author) {
+                            //Console.WriteLine(persons[i]);
+                            c++;
+                        }
+                    }
+                    if (c > 1) {
                         yield return persons[i];
                     }
                 }
@@ -117,6 +156,23 @@ namespace Lab9
                 }
                 else {
                     if (DateTime.Now.Year - buf[i].Publication.Year - maxYear < 0)
+                    {
+                        yield return buf[i];
+                    }
+                }
+            }
+        }
+        public IEnumerable<Paper> GetPapersYear() // number 10
+        {
+            List<Paper> buf = this.papers;
+            buf.Reverse();
+            for (int i = 0; i < buf.Count; i++) {
+                if (i == buf.Count)
+                {
+                    yield break;
+                }
+                else {
+                    if (DateTime.Now.Year - buf[i].Publication.Year - 1 < 0)
                     {
                         yield return buf[i];
                     }
