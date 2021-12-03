@@ -17,7 +17,7 @@ namespace Lab9
             this.theme = "NoTheme";
             this.tf = TimeFrame.Year;
             this.papers.Add(new Paper());
-            this.persons.Add(new Person()); //???
+            this.persons.Add(new Person());
         }
         public ResearchTeam(string theme, string organization, int id, TimeFrame tf, List<Paper> papers, List<Person> persons) : base(organization, id)
         {
@@ -83,7 +83,6 @@ namespace Lab9
             set { this.Name = value; }
         }
         //Методы
-
         public IEnumerable<Person> GetPersons()
         {
             for (int i = 0; i < persons.Count; i++) {
@@ -131,11 +130,9 @@ namespace Lab9
                     yield break;
                 }
                 else {
-                    //bool flag = false;
                     int c = 0;
                     for (int j = 0; j < papers.Count; j++) {
                         if (persons[i] == papers[j].Author) {
-                            //Console.WriteLine(persons[i]);
                             c++;
                         }
                     }
@@ -217,15 +214,15 @@ namespace Lab9
             }
             return buf;
         }
-        public string ToShortString() => $"{theme} {orgName} {regNumber} {tf}";
-        new public object DeepCopy()
+        public string ToShortString() => $"{theme} {orgName} {regNumber} {tf}"; 
+        public override object DeepCopy()
         {
             
-            List<Paper> cloned_papers = new List<Paper>(); // ???
+            List<Paper> cloned_papers = new List<Paper>();
             for (int i = 0; i < papers.Count; i++) {
                 cloned_papers.Add(papers[i]);
             }
-            List<Person> cloned_persons = new List<Person>(); // ???
+            List<Person> cloned_persons = new List<Person>();
             for (int i = 0; i < persons.Count; i++) {
                 cloned_persons.Add(persons[i]);
             }
@@ -248,7 +245,6 @@ namespace Lab9
             }
             return false;
         }
-
         public static bool operator ==(ResearchTeam sample1, ResearchTeam sample2)
         {
             if ((sample1.theme.GetHashCode() == sample2.theme.GetHashCode()) & (sample1.orgName.GetHashCode() == sample2.orgName.GetHashCode()) & (sample1.regNumber.GetHashCode() == sample2.regNumber.GetHashCode()))

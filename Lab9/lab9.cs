@@ -60,8 +60,8 @@ namespace Lab9
                 Console.WriteLine("Number 5");
                 ResearchTeam test = new ResearchTeam();
                 ResearchTeam testCopy = (ResearchTeam) test.DeepCopy();
-                testCopy.AddPerson(new Person("AnotherName", "AnotherSurname", new DateTime(1000, 1, 1)));
-                testCopy.OrgName = "Another orgName";
+                test.AddPerson(new Person("AnotherName", "AnotherSurname", new DateTime(1000, 1, 1)));
+                test.OrgName = "Another orgName";
                 Console.WriteLine(test);
                 Console.WriteLine("\n------------------\n");
                 Console.WriteLine(testCopy);

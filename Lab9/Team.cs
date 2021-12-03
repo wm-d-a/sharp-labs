@@ -36,7 +36,7 @@ namespace Lab9
             get { return this.regNumber; }
             set
             {
-                // ДОБАВИТЬ ИСКЛЮЧЕНИЕ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                
                 if (value > 0)
                 {
                     this.regNumber = value;
@@ -46,7 +46,7 @@ namespace Lab9
                 }
             }
         }
-        public virtual object DeepCopy()
+        public virtual object DeepCopy() 
         {
             return new Team
             {

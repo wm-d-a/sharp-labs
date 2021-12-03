@@ -32,7 +32,7 @@ namespace Lab9
             {
                 Title = this.Title,
                 Author = this.Author,
-                Publication = this.Publication
+                Publication = this.Publication 
             };
         }
         public override bool Equals(object obj)
