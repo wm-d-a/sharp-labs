@@ -1,0 +1,32 @@
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\bin\Debug\net5.0\PR-10.exe
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\bin\Debug\net5.0\PR-10.deps.json
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\bin\Debug\net5.0\PR-10.runtimeconfig.json
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\bin\Debug\net5.0\PR-10.runtimeconfig.dev.json
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\bin\Debug\net5.0\PR-10.dll
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\bin\Debug\net5.0\ref\PR-10.dll
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\bin\Debug\net5.0\PR-10.pdb
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\PR-10.csproj.AssemblyReference.cache
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\PR-10.GeneratedMSBuildEditorConfig.editorconfig
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\PR-10.AssemblyInfoInputs.cache
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\PR-10.AssemblyInfo.cs
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\PR-10.csproj.CoreCompileInputs.cache
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\PR-10.dll
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\ref\PR-10.dll
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\PR-10.pdb
+D:\User\YandexDisk\Different\Projects\OOP\PR-10\obj\Debug\net5.0\PR-10.genruntimeconfig.cache
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\bin\Debug\net5.0\PR-10.exe
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\bin\Debug\net5.0\PR-10.deps.json
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\bin\Debug\net5.0\PR-10.runtimeconfig.json
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\bin\Debug\net5.0\PR-10.runtimeconfig.dev.json
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\bin\Debug\net5.0\PR-10.dll
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\bin\Debug\net5.0\ref\PR-10.dll
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\bin\Debug\net5.0\PR-10.pdb
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\PR-10.csproj.AssemblyReference.cache
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\PR-10.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\PR-10.AssemblyInfoInputs.cache
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\PR-10.AssemblyInfo.cs
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\PR-10.csproj.CoreCompileInputs.cache
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\PR-10.dll
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\ref\PR-10.dll
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\PR-10.pdb
+C:\Users\damir\OneDrive\Рабочий стол\PR-10\obj\Debug\net5.0\PR-10.genruntimeconfig.cache
