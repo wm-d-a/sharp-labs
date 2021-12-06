@@ -6,36 +6,40 @@ using System.Threading.Tasks;
 
 namespace Lab11
 {
-    class lab11
+    class lab11 
     {
         static void Main(string[] args)
         {
-
-            ResearchTeamCollection collection1 = new ResearchTeamCollection();
-            ResearchTeamCollection collection2 = new ResearchTeamCollection();
-
+            //Number 1
+            ResearchTeamCollection sample1 = new ResearchTeamCollection();
+            ResearchTeamCollection sample2 = new ResearchTeamCollection();
+            //--------
+            //Number 2
             TeamsJournal journal1 = new TeamsJournal();
             TeamsJournal journal2 = new TeamsJournal();
+            
+            sample1.ResearchTeamAdded += journal1.TeamEventHandler;
+            sample1.ResearchTeamInserted += journal1.TeamEventHandler;
 
-            collection1.ResearchTeamAdded += journal1.TeamEventHandler;
-            collection1.ResearchTeamInserted += journal1.TeamEventHandler;
+            sample1.ResearchTeamAdded += journal2.TeamEventHandler;
+            sample1.ResearchTeamInserted += journal2.TeamEventHandler;
 
-            collection1.ResearchTeamAdded += journal2.TeamEventHandler;
-            collection1.ResearchTeamInserted += journal2.TeamEventHandler;
-
-            collection2.ResearchTeamAdded += journal2.TeamEventHandler;
-            collection2.ResearchTeamInserted += journal2.TeamEventHandler;
-
-            collection1.AddDefaults();
-            collection1.AddResearchTeams(new ResearchTeam("Chaos", "IRE", 1, TimeFrame.Year));
-            collection2.AddDefaults();
-            collection2.InsertAt(1, new ResearchTeam("Another", "IRE", 1, TimeFrame.Year));
-            collection2.InsertAt(6, new ResearchTeam("Another", "IRE", 1, TimeFrame.Year));
-
+            sample2.ResearchTeamAdded += journal2.TeamEventHandler;
+            sample2.ResearchTeamInserted += journal2.TeamEventHandler;
+            //--------
+            //Number 3
+            sample1.AddDefaults();
+            sample1.AddResearchTeams(new ResearchTeam("sampleNname", "---", 23, TimeFrame.Year));
+            sample2.AddDefaults();
+            sample2.InsertAt(1, new ResearchTeam("sampleName2", "---", 23, TimeFrame.Year));
+            sample2.InsertAt(6, new ResearchTeam("sampleName3", "---", 23, TimeFrame.Year));
+            //--------
+            //Number 4
             Console.WriteLine(journal1.ToString());
             Console.WriteLine();
             Console.WriteLine(journal2.ToString());
             Console.ReadLine();
+            //--------
         }
     }
 }
