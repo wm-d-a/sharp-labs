@@ -36,7 +36,7 @@ namespace Lab10
                 new Person("gfh", "fdh", new System.DateTime(2202, 8, 20))
                 );
             researchTeams.Add(rt);
-
+                
             rt = new ResearchTeam("drfgh", "fds", 122, TimeFrame.TwoYear);
             rt.AddPapers(
                 new Paper("sdfgh", new Person(), new System.DateTime(2021, 10, 2))

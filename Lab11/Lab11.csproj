@@ -47,6 +47,13 @@
     <Compile Include="Paper.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResearchTeam.cs" />
+    <Compile Include="ResearchTeamCollection.cs" />
+    <Compile Include="ResearchTeamComparer.cs" />
+    <Compile Include="Team.cs" />
+    <Compile Include="TeamsJournal.cs" />
+    <Compile Include="TeamsJournalEntry.cs" />
+    <Compile Include="TeamsListEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

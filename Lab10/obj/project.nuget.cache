@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ov8yOcAYvfDS64WVTsb3RXHja4r20XnbRcHHce/wQ3ELn4ONGbNy8nlAu+kdwq5vW9dC/uiOoHRXei2wbu/3ww==",
+  "dgSpecHash": "GtlTdrJhFH4o/myAwtPjYysPHXrDwfTYUsWTDEL4V/sYbmWu1H6GjKscvLEsvCZgLjw0/zw5JXzMkri0KH6Lhw==",
   "success": true,
-  "projectFilePath": "C:\\C_SHARP\\labs_\\PR-10\\Lab10.csproj",
+  "projectFilePath": "C:\\C_SHARP\\labs_\\Lab10\\Lab10.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

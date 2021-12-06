@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\C_SHARP\\labs_\\Lab10\\Lab10.csproj": {}
+    "C:\\C_SHARP\\labs_\\PR-10\\Lab1b.csproj": {}
   },
   "projects": {
-    "C:\\C_SHARP\\labs_\\Lab10\\Lab10.csproj": {
+    "C:\\C_SHARP\\labs_\\PR-10\\Lab1b.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\C_SHARP\\labs_\\Lab10\\Lab10.csproj",
-        "projectName": "Lab10",
-        "projectPath": "C:\\C_SHARP\\labs_\\Lab10\\Lab10.csproj",
+        "projectUniqueName": "C:\\C_SHARP\\labs_\\PR-10\\Lab1b.csproj",
+        "projectName": "Lab1b",
+        "projectPath": "C:\\C_SHARP\\labs_\\PR-10\\Lab1b.csproj",
         "packagesPath": "C:\\Users\\damir\\.nuget\\packages\\",
-        "outputPath": "C:\\C_SHARP\\labs_\\Lab10\\obj\\",
+        "outputPath": "C:\\C_SHARP\\labs_\\PR-10\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\damir\\AppData\\Roaming\\NuGet\\NuGet.Config",
