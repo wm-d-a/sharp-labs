@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab11
+namespace Lab13
 {
     class ResearchTeamCollection : IEnumerable
     {
@@ -124,7 +124,6 @@ namespace Lab11
             get { return SomeResearchTeams[index]; }
             set { SomeResearchTeams[index] = value; }
         }
-        
         public delegate void TeamListHandler(object source, TeamsListEventArgs args);
         public event TeamListHandler ResearchTeamAdded;
         public event TeamListHandler ResearchTeamInserted;

@@ -7,9 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Lab11
+namespace Lab13
 {
     enum TimeFrame { Year, TwoYears, Long }
+    [Serializable]
     class ResearchTeam : Team
     {
         private string Theme;
@@ -90,7 +91,7 @@ namespace Lab11
                 this.RegistrationNumber = value.RegistrationNumber;
             }
         }
-
+    
         public string Name
         {
             get
@@ -104,14 +105,6 @@ namespace Lab11
             }
         }
 
-        public override object DeepCopy()
-        {
-            ResearchTeam CopyTeam = new ResearchTeam(this.Theme, this.Organisation, this.RegistrationNumber, this.ResearchDuration);
-            CopyTeam.ListOfParticipants = ListOfParticipants;
-            CopyTeam.ListOfPublication = ListOfPublication;
-            return CopyTeam;
-
-        }
         public IEnumerable<Person> MembersWithoutPublications()
         {
 
@@ -164,5 +157,119 @@ namespace Lab11
         }
 
         public delegate void TeamListHandler(object source, TeamsListEventArgs args);
+        public new ResearchTeam DeepCopy()
+        {
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            MemoryStream stream = new MemoryStream();
+            formatter.Serialize(stream, this);
+            return (ResearchTeam)formatter.Deserialize(stream);
+        }
+
+        public bool Save(string filename)
+        {
+
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, this);
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public bool Load(string filename)
+        {
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                {
+                    ResearchTeam rt = (ResearchTeam)formatter.Deserialize(fs);
+                    this.Name = rt.Name;
+                    this.Organisation = rt.Organisation;
+                    this.RegistrationNumber = rt.RegistrationNumber;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public static bool Save(string filename, ResearchTeam rt)
+        {
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, rt);
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public static bool Load(string filename, ResearchTeam rt)
+        {
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                {
+                    ResearchTeam tmp = (ResearchTeam)formatter.Deserialize(fs);
+                    rt.Name = tmp.Name;
+                    rt.Organisation = tmp.Organisation;
+                    rt.RegistrationNumber = tmp.RegistrationNumber;
+
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+            return true;
+        }
+
+        public bool AddFromConsole()
+        {
+            Console.WriteLine("Input the data: Name,  Surname, Birth");
+            Console.WriteLine("Разделитель - запятая");
+            string ConsoleInput = Console.ReadLine();
+            try
+            {
+                string[] diff = ConsoleInput.Split(',');
+                ListOfParticipants.Add(new Person(diff[0], diff[1], Convert.ToDateTime(diff[2])));
+
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+            return true;
+        }
     }
 }
