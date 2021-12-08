@@ -1,29 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab13
 {
+    [Serializable]
     class Paper
     {
-
-        public string _Publication { get; set; }
-        public Person _Author { get; set; }
-        public DateTime _TimeOfPublication { get; set; }
-
-        public Paper(string Publication, Person Author, DateTime PublicationDate)
+        public string Title { get; set; }
+        public Person Author { get; set; }
+        public DateTime Publication { get; set; }
+        public Paper()
         {
-            _Publication = Publication;
-            _Author = Author;
-            _TimeOfPublication = PublicationDate;
+            Title = "NoTitle";
+            Author = new Person();
+            Publication = new DateTime();
         }
-        public Paper() : this("No Publication", new Person(), new DateTime(2000, 01, 02)) { }
-
-        public override string ToString()
+        public Paper(string title, Person author, DateTime publication)
         {
-            return string.Format(_Publication, " ", _Author.ToString(), " ", _TimeOfPublication.ToString());
+            this.Title = title;
+            this.Author = author;
+            this.Publication = publication;
         }
+        public override string ToString() => $"{Title} {Author} {Publication.ToShortDateString()}";
+        public virtual object DeepCopy() =>
+            new Paper(
+                this.Title, this.Author.DeepCopy() as Person,
+                new DateTime(Publication.Year, Publication.Month, Publication.Day)
+            );
     }
 }

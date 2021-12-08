@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Lab13
 {
     class ResearchTeamComparer : IComparer<ResearchTeam>
     {
-        public int Compare(ResearchTeam l_Team, ResearchTeam R_Team)
+        public int Compare(ResearchTeam rt1, ResearchTeam rt2)
         {
-            return l_Team.ListOfPublication.Count.CompareTo(R_Team.ListOfPublication.Count);
+            if (rt1.Papers.Count > rt2.Papers.Count) return 1;
+            if (rt1.Papers.Count < rt2.Papers.Count) return -1;
+            return 0;
         }
     }
 }

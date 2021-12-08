@@ -1,106 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab13
 {
+    [Serializable]
     class Person
     {
-        private string _Name;
-        public string PersName
+        string name;
+        string surname;
+        DateTime birth;
+        public Person()
         {
-            get
-            {
-                return _Name;
-            }
+            name = "NoName";
+            surname = "NoSurname";
+            birth = new DateTime(2000, 1, 1);
         }
-        private string _Surname;
-        public string PersonSurname
+        public Person(string name, string surname, DateTime birth)
         {
-            get { return _Surname; }
+            this.name = name;
+            this.surname = surname;
+            this.birth = birth;
+        }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public string Surname
+        {
+            get { return surname; }
+            set { surname = value; }
+        }
+        public DateTime Birth
+        {
+            get { return birth; }
+            set { birth = value; }
+        }
+        public int Year
+        {
+            get { return Birth.Year; }
+            set { Birth = new DateTime(value, Birth.Month, Birth.Day); }
+        }
+        public override string ToString() => $"{name} {surname} {birth.ToShortDateString()}";
+        public string ToShortString() => $"{name} {surname}";
 
-        }
-        private System.DateTime _Birthday;
-        public DateTime PersonBirthday
-        {
-            get { return _Birthday; }
-
-        }
-        public int intBirthday
-        {
-            get { return Convert.ToInt32(_Birthday); }
-            set { _Birthday = Convert.ToDateTime(value); }
-        }
-        public Person(string Name, string Surname, DateTime Birthday)
-        {
-            _Name = Name;
-            _Surname = Surname;
-            _Birthday = Birthday;
-        }
-        public Person() : this("Jon", "Milton", new DateTime(1998, 11, 12))
-        {
-        }
-        public override string ToString()
-        {
-            return string.Format("{0} {1} was born {2}", _Name, _Surname, _Birthday);
-        }
-        public string ToShortString()
-        {
-            return string.Format("{0} {1}", _Name, _Surname);
-        }
         public override bool Equals(object obj)
         {
-            if (obj == null)
+            Person p = obj as Person;
+            if (p != null)
             {
+                if (
+                    p.name == this.name &
+                    p.surname == this.surname &
+                    p.birth == this.birth
+                ) return true;
                 return false;
             }
-            Person objPers = obj as Person;
-            if (obj as Person == null)
-            {
-                return false;
-            }
-            return objPers.PersName == _Name && objPers.PersonSurname == _Surname && objPers.PersonBirthday == _Birthday;
+            else throw new System.Exception("Невозможно сравнить объекты");
         }
-        public override int GetHashCode()
-        {
-            int hashcode = 0;
-            char[] NameChar = _Name.ToCharArray();
-
-            foreach (char ch in NameChar)
-            {
-                hashcode += Convert.ToInt32(ch);
-            }
-            char[] SurnameChar = _Surname.ToCharArray();
-            foreach (char ch in SurnameChar)
-            {
-                hashcode += Convert.ToInt32(ch);
-            }
-            hashcode += _Birthday.Year * _Birthday.Month;
-            return hashcode;
-        }
-        public static bool operator ==(Person lpers, Person rpers)
-        {
-            if (ReferenceEquals(lpers, rpers))
-            {
-                return true;
-            }
-            if ((object)lpers == null || (object)rpers == null)
-            {
-                return false;
-            }
-            return lpers.PersName == rpers.PersName && lpers.PersonBirthday == rpers.PersonBirthday && lpers.PersonSurname == rpers.PersonSurname;
-        }
-        public static bool operator !=(Person lpers, Person rpers)
-        {
-            return !(lpers == rpers);
-        }
-        public virtual object DeepCopy()
-        {
-            Person persCopy = new Person(this.PersName, this.PersonSurname, this.PersonBirthday);
-            return persCopy;
-        }
+        public override int GetHashCode() => (name.Length + surname.Length + birth.Second) * 0xFFFFFF;
+        public static bool operator ==(Person p1, Person p2) => p1.Equals(p2);
+        public static bool operator !=(Person p1, Person p2) => !p1.Equals(p2);
+        public virtual object DeepCopy() =>
+            new Person(
+                this.name, this.surname,
+                new DateTime(birth.Year, birth.Month, birth.Day)
+            );
     }
 }
-

@@ -1,93 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab13
 {
-    class Team
+    [Serializable]
+    class Team : INameAndCopy, IComparable
     {
-        protected string _Organisation;
-        public string Organisation
+        protected string organization;
+        protected int id;
+        public Team()
         {
-            get { return _Organisation; }
-            set { _Organisation = value; }
+            organization = "NoOrg";
+            id = 75343;
         }
-        protected int _RegistrationNumber;
-        public int RegistrationNumber
+        public Team(string organization, int id)
         {
-            get { return _RegistrationNumber; }
+            this.organization = organization;
+            this.id = id;
+        }
+        public string Organization
+        {
+            get { return organization; }
+            set { organization = value; }
+        }
+        public int Id
+        {
+            get { return id; }
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException("Reg Num must be more than 0");
-                }
+                if (value <= 0) throw new System.Exception("Отрицательный ID организации");
+                id = value;
             }
         }
+        public string Name
+        {
+            get => organization;
+            set { organization = value; }
+        }
+        public virtual object DeepCopy() => new Team(this.organization, this.id);
+        public override bool Equals(object obj)
+        {
+            Team team = obj as Team;
+            if (team != null)
+            {
+                if (team.id == this.id & team.organization == this.organization) return true;
+                return false;
+            }
+            else throw new System.Exception("Невозможно сравнить объекты");
+        }
+        public override int GetHashCode() => (id + organization.Length) * 0xFFFFFF;
+        public override string ToString() => $"{this.organization} - {this.id}";
+        public static bool operator ==(Team t1, Team t2) => t1.Equals(t2);
+        public static bool operator !=(Team t1, Team t2) => !(t1 == t2);
         public int CompareTo(object obj)
         {
-            Team tmp = obj as Team;
-            if (tmp == null)
-            {
-                throw new ArgumentException("Wrong type!");
-            }
-            return _RegistrationNumber.CompareTo(tmp._RegistrationNumber);
-        }
-        // Constructor, which assigns specified values to the fields of class;
-        public Team(string Organisation, int RegistrNumber)
-        {
-            _Organisation = Organisation;
-            _RegistrationNumber = RegistrNumber;
-        }
-        public Team() : this("Some Org", 1) { }
-        public virtual object DeepCopy()
-        {
-            return new Team(this.Organisation, this.RegistrationNumber);
-        }
-        public virtual new bool Equals(object obj)
-        {
-            if (obj == null)
-            {
-                return false;
-            }
-            Team objTeam = obj as Team;
-            if (objTeam == null)
-            {
-                return false;
-            }
-            return this.Organisation == objTeam.Organisation && this.RegistrationNumber == objTeam.RegistrationNumber;
-        }
-        public static bool operator ==(Team l_Team, Team r_Team)
-        {
-            if (ReferenceEquals(l_Team, r_Team))
-            {
-                return true;
-            }
-            if (((object)l_Team) == null && ((object)r_Team) == null)
-            {
-                return false;
-            }
-            return false; //(l_Team.Organisation == r_Team.Organisation);// && (l_Team.RegistrationNumber==r_Team.RegistrationNumber);
-        }
-        public static bool operator !=(Team l_Team, Team r_Team)
-        {
-            return !(l_Team == r_Team);
-        }
-        public virtual new int GetHashCode()
-        {
-            int HashCode = 0;
-            foreach (char ch in _Organisation.ToCharArray())
-            {
-                HashCode += (int)Convert.ToUInt32(ch);
-            }
-            HashCode += _RegistrationNumber;
-            return HashCode;
-        }
-        public virtual new string ToString()
-        {
-            return string.Format("Team of organisation {0} with registration number {1}", _Organisation, _RegistrationNumber);
+            Team t = obj as Team;
+            if (t != null) return this.id.CompareTo(t.id);
+            else throw new System.Exception("Невозможно сравнить объекты");
         }
     }
 }

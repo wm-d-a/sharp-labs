@@ -2,212 +2,136 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Lab13
 {
-    enum TimeFrame { Year, TwoYears, Long }
+    enum TimeFrame { Year, TwoYear, Long }
     [Serializable]
-    class ResearchTeam : Team
+    class ResearchTeam : Team, INameAndCopy, IEnumerable, IComparer<ResearchTeam>
     {
-        private string Theme;
-
-        private TimeFrame ResearchDuration;
-        public TimeFrame ResDuration { get { return ResearchDuration; } }
-
-        List<Person> ProjectParticipants = new List<Person>();
-        List<Paper> Publications = new List<Paper>();
-
-        public List<Paper> ListOfPublication { get { return Publications; } set { Publications = value; } }
-        public ResearchTeam(string InvestigationTheme, string Organisation, int RegistrationNumber, TimeFrame InvestigationDuration)
+        string theme;
+        TimeFrame tf;
+        // ArrayList papers, persons;
+        List<Paper> papers;
+        List<Person> persons;
+        public ResearchTeam()
+            : base()
         {
-            ResearchDuration = InvestigationDuration;
-            Theme = InvestigationTheme;
-            _RegistrationNumber = RegistrationNumber;
-            _Organisation = Organisation;
+            theme = "NoTheme";
+            tf = TimeFrame.Year;
+            papers = new List<Paper>();
+            persons = new List<Person>();
         }
-        public ResearchTeam() : this("Chaos", "IRE", 13, TimeFrame.Year) { }
-
-        public Paper LastPaper
+        public ResearchTeam(string theme, string organization, int id, TimeFrame tf)
+            : base(organization, id)
+        {
+            this.theme = theme;
+            this.id = id;
+            this.tf = tf;
+            papers = new List<Paper>();
+            persons = new List<Person>();
+        }
+        public Paper Paper
         {
             get
             {
-                if (Publications.Count == 0)
-                {
-                    return null;
-                }
-                int MaxIndex = 0;
-                DateTime MaxDateTime = Publications[0]._TimeOfPublication;
-                for (int i = 0; i < Publications.Count; i++)
-                {
-                    if (Publications[i]._TimeOfPublication > MaxDateTime)
-                    {
-                        MaxIndex = i;
-                        MaxDateTime = Publications[i]._TimeOfPublication;
-                    }
-                }
-                return Publications[MaxIndex];
+                if (papers.Count == 0) return null;
+                else return (Paper)papers[papers.Count - 1];
             }
         }
-        public void AddPapers(params Paper[] AdditionalPapers)
+        public Team Team
         {
-            Publications.AddRange(AdditionalPapers);
+            get => new Team(this.organization, this.id);
+            set
+            {
+                organization = value.Organization;
+                id = value.Id;
+            }
         }
+        public string Theme
+        {
+            get { return theme; }
+            set { theme = value; }
+        }
+        public TimeFrame TF
+        {
+            get { return tf; }
+            set { tf = value; }
+        }
+        public List<Paper> Papers
+        {
+            get { return papers; }
+            set { papers = value; }
+        }
+        public List<Person> Persons
+        {
+            get { return persons; }
+            set { persons = value; }
+        }
+        public bool this[TimeFrame tf] { get => this.tf == tf; }
+        public void AddPapers(params Paper[] papers) => this.papers.AddRange(papers);
+        public void AddPersons(params Person[] persons) => this.persons.AddRange(persons);
         public override string ToString()
         {
-            string stringListOfPublications = "";
-            foreach (Paper pap in Publications)
-            {
-                stringListOfPublications += pap.ToString() + "\r\n";
-            }
-            string stringListOfParticipants = "";
-            foreach (Person pers in ProjectParticipants)
-            {
-                stringListOfParticipants += pers.ToString() + "\r\n";
-            }
-            return base.ToString() + string.Format("\r\n Theme: {0}, Duration: {1} \r\n Participants: {2} \r\n Publications: {3}", Theme, ResearchDuration, stringListOfParticipants, stringListOfPublications);
+            string temp = $"{theme} {organization} {id} {tf}\nУчастники ({persons.Count}):\n";
+            foreach (var item in persons) temp += item + "\n";
+            temp += $"Публикации:\n";
+            foreach (var item in papers) temp += item + "\n";
+            return temp;
         }
-        public string ToShortString()
+        public string ToShortString() => $"{theme} {organization} {id} {tf}";
+        public IEnumerable GetPersonsWithoutPapers()
         {
-            return base.ToString() + string.Format("\r\n Theme: {0}, Duration: {1} \r\n ", Theme, ResearchDuration);
-        }
-        public List<Person> ListOfParticipants { get { return ProjectParticipants; } set { ProjectParticipants = value; } }
-        public void AddMembers(params Person[] AdditionalMembers)
-        {
-            ProjectParticipants.AddRange(AdditionalMembers);
-        }
-        public Team getTeamType
-        {
-            get
+            for (int i = 0; i < persons.Count; i++)
             {
-                return new Team(Organisation, RegistrationNumber);
-            }
-            set
-            {
-                this.Organisation = value.Organisation;
-                this.RegistrationNumber = value.RegistrationNumber;
-            }
-        }
-    
-        public string Name
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public IEnumerable<Person> MembersWithoutPublications()
-        {
-
-            ArrayList AutorsWithoutP = new ArrayList();
-            bool someBool;
-            foreach (Person pers in ProjectParticipants)
-            {
-                someBool = true;
-                foreach (Paper pap in Publications)
-                {
-                    if (pap._Author == pers)
+                bool have_paper = false;
+                foreach (Paper item in papers)
+                    if (item.Author == (Person)persons[i])
                     {
-                        someBool = false;
+                        have_paper = true;
                         break;
                     }
-                }
-                if (someBool)
-                {
-                    AutorsWithoutP.Add(pers);
-                    //Console.WriteLine(pers.ToShortString());
-                }
-
+                if (have_paper) continue;
+                else yield return persons[i];
             }
-            for (int i = 0; i < AutorsWithoutP.Count; i++)
-            {
-                yield return (Person)AutorsWithoutP[i];
-                //Console.Write(((Person)AutorsWithoutP[i]).ToShortString());
-            }
-
         }
-        public IEnumerable<Paper> LastPapers(int N_years)
+        public IEnumerable GetPersonsWithPapers()
         {
-            for (int i = 0; i < Publications.Count; i++)
+            for (int i = 0; i < persons.Count; i++)
             {
-                if (((Paper)Publications[i])._TimeOfPublication.Year >= DateTime.Now.Year - N_years)
-                {
-                    yield return (Paper)Publications[i];
-                    //Console.Write(((Paper)Publications[i]).ToString());
-                }
+                bool have_paper = false;
+                foreach (Paper item in papers)
+                    if (item.Author == (Person)persons[i])
+                    {
+                        have_paper = true;
+                        break;
+                    }
+                if (!have_paper) continue;
+                else yield return persons[i];
             }
         }
-
-        public int CompareTo(ResearchTeam other)
+        public IEnumerable GetPapersForLastYears(int n)
         {
-            if (other == null)
-            {
-                throw new ArgumentException("Wrong argument!");
-            }
-            return Theme.CompareTo(other.Theme);
+            int year = DateTime.Now.Year - n;
+            for (int i = 0; i < papers.Count; i++)
+                if ((papers[i] as Paper).Publication.Year > year) yield return papers[i];
         }
+        public IEnumerable GetPapersForLastYear() => GetPapersForLastYears(1);
+        public IEnumerator GetEnumerator() => new ResearchTeamEnumerator(persons);
+        public int Compare(ResearchTeam rt1, ResearchTeam rt2) => string.Compare(rt1.Theme, rt2.Theme);
 
-        public delegate void TeamListHandler(object source, TeamsListEventArgs args);
         public new ResearchTeam DeepCopy()
         {
-
             BinaryFormatter formatter = new BinaryFormatter();
             MemoryStream stream = new MemoryStream();
             formatter.Serialize(stream, this);
+            stream.Position = 0;
             return (ResearchTeam)formatter.Deserialize(stream);
         }
 
-        public bool Save(string filename)
-        {
-
-            try
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-
-                using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
-                {
-                    formatter.Serialize(fs, this);
-                }
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                return false;
-            }
-            return true;
-        }
-
-        public bool Load(string filename)
-        {
-            try
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                using (FileStream fs = new FileStream(filename, FileMode.Open))
-                {
-                    ResearchTeam rt = (ResearchTeam)formatter.Deserialize(fs);
-                    this.Name = rt.Name;
-                    this.Organisation = rt.Organisation;
-                    this.RegistrationNumber = rt.RegistrationNumber;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                return false;
-            }
-            return true;
-        }
-
+        public bool Save(string filename) => Save(filename, this);
+        public bool Load(string filename) => Load(filename, this);
         public static bool Save(string filename, ResearchTeam rt)
         {
             try
@@ -220,7 +144,7 @@ namespace Lab13
             }
             catch (IOException ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
                 return false;
             }
             return true;
@@ -235,14 +159,15 @@ namespace Lab13
                 {
                     ResearchTeam tmp = (ResearchTeam)formatter.Deserialize(fs);
                     rt.Name = tmp.Name;
-                    rt.Organisation = tmp.Organisation;
-                    rt.RegistrationNumber = tmp.RegistrationNumber;
-
+                    rt.Organization = tmp.Organization;
+                    rt.Id = tmp.Id;
+                    rt.Papers = tmp.Papers;
+                    rt.Persons = tmp.Persons;
                 }
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
                 return false;
             }
             return true;
@@ -250,23 +175,24 @@ namespace Lab13
 
         public bool AddFromConsole()
         {
-            Console.WriteLine("Input the data: Name,  Surname, Birth");
-            Console.WriteLine("Разделитель - запятая");
-            string ConsoleInput = Console.ReadLine();
+            Console.WriteLine("Input data: Name, Surname, Birth");
+            char[] separators = "; ".ToCharArray();
+            Console.Write("Separator - ';'");
+            foreach (var i in separators) Console.Write(i);
+            Console.WriteLine();
             try
             {
-                string[] diff = ConsoleInput.Split(',');
-                ListOfParticipants.Add(new Person(diff[0], diff[1], Convert.ToDateTime(diff[2])));
-
+                string[] diff = Console.ReadLine().Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                Persons.Add(new Person(diff[0], diff[1], Convert.ToDateTime(diff[2])));
             }
             catch (IOException ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
                 return false;
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message);
                 return false;
             }
             return true;

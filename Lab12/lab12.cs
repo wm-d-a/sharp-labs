@@ -1,107 +1,128 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Lab12
+
+namespace Laba12
 {
-    class Student {
-        public string Surname { get; set; }
-        public string Lesson { get; set; }
-        public double Rating { get; set; }
+    class Film
+    {
+        public string Name { get; set; }
+        public string Filmmaker { get; set; }
+        public int Year { get; set; }
 
-        public Student() {
-            this.Surname = "DefaultSurname";
-            this.Lesson = "DefaultLesson";
-            this.Rating = 5;
+        public Film()
+        {
+            this.Name = "Name";
+            this.Filmmaker = "Filmmaker";
+            this.Year = 2021;
         }
-        public Student(string surname, string lesson, double rating) {
-            this.Surname = surname;
-            this.Lesson = lesson;
-            this.Rating = rating;
+        public Film(string Name, string Filmmaker, int Year)
+        {
+            this.Name = Name;
+            this.Filmmaker = Filmmaker;
+            this.Year = Year;
         }
     }
-    class lab12
+    class laba12
     {
         static void Main(string[] args)
         {
-            Student[] myClass = {
-                new Student("s1", "Math", 2),
-                new Student("s2", "IT", 5),
-                
-                new Student("s7", "Math", 2),
-                new Student("s8", "Math", 2),
-                new Student("s9", "IT", 2.6),
-                new Student("s10", "IT", 2),
-                new Student("s15", "Math", 2),
-                new Student("s16", "Math", 2),
-                new Student("s17", "IT", 1.2),
-                new Student("s18", "Math", 2),
-                new Student("s19", "Math", 2),
-                new Student("s11", "Math", 2),
-                new Student("s12", "Math", 2),
-                new Student("s13", "Math", 2),
-                new Student("s14", "IT", 2.2),
-                new Student("s3", "Math", 5),
-                new Student("s4", "Math", 5),
-                new Student("s5", "Math", 5),
-                new Student("s6", "IT", 3.4),
-                new Student("s20", "IT", 4.5),
-                new Student("s21", "Math", 2),
-                new Student("s22", "Math", 2),
-                new Student("s23", "Math", 2),
-                new Student("s24", "Math", 2),
+            Film[] catFilms = {
+                new Film("Экипаж", "Николай Лебедев", 2016),
+                new Film("Месть", "Тони Скотт", 1990),
+                new Film("Гринч - Похититель Рождества", "Рон Ховард", 2000),
+                new Film("12 стульев", "Леонид Гайдай", 1971),
+                new Film("Гордость и предубеждение", "Джо Райт", 2006),
+                new Film("Тихий Дон", "Сергей Бондарчук", 1992),
+                new Film("Дюна", "Дени Вильнёв", 2021),
+                new Film("Борис Годунов", "Сергей Бондарчук", 1986),
+                new Film("Елки 3", "Антон Мегердичев", 2013),
+                new Film("Аквамарин", "Элизабет Аллен", 2006),
+                new Film("Бриллиантовая рука", "Леонид Гайдай", 1968),
+                new Film("Операция Ы и другие приключения Шурика", "Леонид Гайдай", 1965),
+                new Film("Легенда №17", "Николай Лебедев", 2012),
+                new Film("О чем говорят мужчины", "Дмитрий Дьяченко", 2010),
+                new Film("Метро", "Антон Мегердичев", 2012),
+                new Film("Главный герой", "Шон Леви", 2021),
+                new Film("После.Глава 3", "Кастиль Лэндон", 2021),
+                new Film("Судьба человека", "Сергей Бондарчук", 1959),
+                new Film("Война и мир:1812 год", "Сергей Бондарчук", 1967),
+                new Film("Верю в любовь", "Джон Дебни", 2020)
             };
+            // Фильтрация
             {
-                Console.WriteLine("NUMBER 1\n");
-                var result = from student in myClass
-                             orderby student.Surname, student.Rating
-                             select student;
-                foreach (Student u in result)
-                    Console.WriteLine("{0} - {1}", u.Surname, u.Rating);
-            }
-            {
-                Console.WriteLine("\nNUMBER 2\n");
-                double avgRating = myClass.Where(u => u.Lesson == "IT").Average(n => n.Rating); // СРЕДНЕЕ ЗНАЧЕНИЕ
-                Console.WriteLine($"Avg: {avgRating}");
-            }
-            {
-                Console.WriteLine("\nNUMBER 3\n"); // ФИЛЬТРАЦИЯ
+                Console.WriteLine("\n\n1.Фильмы Леонида Гайдая или Сергея Бондарчука\n");
 
-                var selectedStudents = myClass.Where(u => u.Rating > 3 && u.Lesson == "Math");
+                var selectedFilms = catFilms.Where(u => u.Filmmaker == "Леонид Гайдай" && u.Filmmaker == "Сергей Бондарчук");
 
-                foreach (Student u in selectedStudents)
-                  Console.WriteLine("{0} - {1}", u.Surname, u.Rating);
+                foreach (Film u in selectedFilms)
+                    Console.WriteLine(u.Name, u.Year);
+            }
+            // Проекция
+            {
+                Console.WriteLine("\n\n2.Наименование и Сколько лет в прокате\n");
+                var items = from Film in catFilms
+                            select new
+                            {
+                                FName = Film.Name,
+                                HM = DateTime.Now.Year - Film.Year
+                            };
+
+                foreach (var n in items)
+                    Console.WriteLine("{0} - {1}", n.FName, n.HM);
+            }
+            //Сортировка
+            {
+                Console.WriteLine("\n\n3.1.Сортировка по наименованию\n");
+
+                var items1 = from Film in catFilms
+                             orderby Film.Name, Film.Year
+                             select Film;
+                foreach (Film u in items1)
+                    Console.WriteLine("{0} - {1}", u.Name, u.Year);
             }
             {
-                Console.WriteLine("\nNUMBER 4\n");
-                var surnames = myClass.Select(u => u.Surname); // ПРОЕКЦИЯ
-                foreach (string n in surnames)
-                    Console.WriteLine(n);
+                Console.WriteLine("\n3.2.Сортировка по году выпуска\n");
+
+                var items1 = from Film in catFilms
+                             orderby Film.Year
+                             select Film;
+                foreach (Film u in items1)
+                    Console.WriteLine("{0} - {1}", u.Name, u.Year);
             }
+            //Группировка
             {
-                Console.WriteLine("\nNUMBER 5\n");
-                var studLes = myClass.GroupBy(p => p.Lesson); // ГРУППИРОВКА
-                foreach (IGrouping<string, Student> g in studLes)
+                Console.WriteLine("\n\n4.Группировка по режиссеру\n");
+                var Fmg = catFilms.GroupBy(p => p.Filmmaker);
+                foreach (IGrouping<string, Film> g in Fmg)
                 {
                     Console.WriteLine(g.Key);
                     foreach (var t in g)
-                        Console.WriteLine(t.Lesson);
+                        Console.WriteLine(t.Filmmaker, t.Name);
                     Console.WriteLine();
                 }
             }
+            //Агрегатные функции
             {
-                Console.WriteLine("\nNUMBER 6\n");
-                bool result2 = myClass.All(u => u.Rating > 3); // ALL
-                Console.WriteLine(result2);
+                Console.WriteLine("\n\n5.Количество фильмов вышедших в прокат в текущем году\n");
+                double Count = catFilms.Where(u => u.Year == 2021).Count();
+                Console.WriteLine($"Количество фильмов вышедших в прокат в текущем году: {Count}");
             }
+            //Skip, Take, SkipWhile, TakeWhile
             {
-                Console.WriteLine("\nNUMBER 7\n");
-                var result3 = myClass.Skip(myClass.Length / 2).Take(3); // SKIP/TAKE
-                foreach (Student i in result3)
-                    Console.WriteLine($"{i.Surname}, {i.Lesson}, {i.Rating}");
+                Console.WriteLine("\n\n6.Извлечь из списка элементы начиная с 1990 года выпуска \n");
+                var item2 = catFilms.OrderBy(x => x.Year);
+                var item3 = item2.SkipWhile(x => x.Year != 1990);
+                foreach (Film i in item3)
+                    Console.WriteLine($"{i.Name}, {i.Filmmaker}, {i.Year}");
             }
+            //All и Any
+            {
+                Console.WriteLine("\n\n7.Все ли фильмы вышли в прокат в текущем году\n");
+                bool item3 = catFilms.All(u => u.Year == 2021);
+                Console.WriteLine(item3);
+            }
+
             Console.ReadKey();
         }
     }
